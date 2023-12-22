@@ -27,7 +27,7 @@ public class AppConfig {
 	@Value("${spring.redis.password}")
 	private String redisPassword;
 
-	@Bean("newsCache")
+	@Bean("attRedis")
 	public RedisTemplate<String, String> redisTemplateFactory() {
 		final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisHost, redisPort);
 		config.setDatabase(redisDatabase);

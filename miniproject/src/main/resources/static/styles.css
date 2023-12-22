@@ -1,0 +1,6 @@
+img.background {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove any default spacing added by inline elements */
+    margin: 0 auto; /* Center the image horizontally */
+}
