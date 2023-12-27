@@ -16,20 +16,16 @@ public class Attractions {
 
     private String officialWebsite;
 
-    public String getOfficialWebsite() {
-        return officialWebsite;
-    }
+    private String mediaURL;
 
-    public void setOfficialWebsite(String officialWebsite) {
-        this.officialWebsite = officialWebsite;
-    }
 
     // default constructor
     public Attractions() {
 
     }
 
-    public Attractions(String uuid, String name, String type, String description, String body, double rating, String officialWebsite) {
+    public Attractions(String uuid, String name, String type, String description, String body,
+        double rating, String officialWebsite, String mediaURL) {
         this.uuid = uuid;
         this.name = name;
         this.type = type;
@@ -37,6 +33,7 @@ public class Attractions {
         this.body = body;
         this.rating = rating;
         this.officialWebsite = officialWebsite;
+        this.mediaURL = mediaURL;
     }
 
     public String getUuid() {
@@ -87,6 +84,22 @@ public class Attractions {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getOfficialWebsite() {
+        return officialWebsite;
+    }
+
+    public void setOfficialWebsite(String officialWebsite) {
+        this.officialWebsite = officialWebsite;
+    }
+
+    public String getMediaURL() {
+        return mediaURL;
+    }
+
+    public void setMediaURL(String mediaURL) {
+        this.mediaURL = mediaURL;
     }
 
 

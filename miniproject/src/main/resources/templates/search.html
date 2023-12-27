@@ -20,21 +20,26 @@
         </div>
 
         <!-- Search Form -->
-        <div class="search-container">
             <form method="GET" th:action="@{/search/attractions}">
-                <input type="text" name="searchValues" class="search" placeholder="Search attractions" required>
-                <button type="submit">Search</button>
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="search-icon fas fa-search"></i>
+                        <input type="text" name="searchValues" class="search" placeholder="Search attractions" required>
+                        <button id="search-button" type="submit">Search</button>
+                    </div>
+                </div>
             </form>
-        </div>
+
 
         <!-- Display Search Results -->
-        <h3>Search Results</h3>
+        <h4>Search Results</h4>
 
         <div th:if="${attractions}" class="row">
             <div th:each="attraction : ${attractions}" class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title" th:text="${attraction.name}"></h5>
+                        <img src="${attraction.mediaURL}">
                     </div>
                     <div class="card-body">
                         <p class="card-text">
@@ -44,6 +49,7 @@
                         <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="btn-link">
                             <button type="button" class="btn btn-primary">View Details</button>
                         </a>
+
                     </div>
                 </div>
             </div>

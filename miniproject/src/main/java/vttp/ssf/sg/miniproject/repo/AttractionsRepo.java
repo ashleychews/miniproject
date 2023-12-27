@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import vttp.ssf.sg.miniproject.models.Attractions;
-
+import vttp.ssf.sg.miniproject.services.MediaService;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -24,6 +24,9 @@ public class AttractionsRepo {
     @Autowired
     @Qualifier("attRedis")
     private RedisTemplate<String, String> template;
+
+    @Autowired
+    private MediaService mdSvc;
 
     public boolean hasFavourite(String username) {
         return template.hasKey(username);
@@ -46,7 +49,7 @@ public class AttractionsRepo {
         template.opsForValue().set(username, jsonString);
 
 
-        // Log relevant information
+        // Log relevant information for testing
         System.out.println("Stored favorites for username: " + username);
         System.out.println("Favorites content: " + jsonString);
     }
@@ -73,7 +76,8 @@ public class AttractionsRepo {
         double rating = jsonObject.getJsonNumber("rating").doubleValue();
         String officialWebsite = jsonObject.getString("officialWebsite");
 
-        return new Attractions(uuid, name, type, description, body, rating, officialWebsite);
+
+        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaUrl);
     }
 
     private String convertListToJsonString(List<Attractions> attractionsList) {

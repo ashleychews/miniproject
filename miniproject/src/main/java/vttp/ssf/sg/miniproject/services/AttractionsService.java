@@ -27,6 +27,9 @@ public class AttractionsService {
     @Autowired
     private AttractionsRepo attRepo;
 
+    @Autowired
+    private MediaService mdSvc;
+
     //GET
     ///content/attractions/v2/search?searchType=keyword&searchValues={searchValue}
     public List<Attractions> getAttractions(String searchValues) {
@@ -65,6 +68,13 @@ public class AttractionsService {
         // data: [{}]
         data = result.getJsonArray("data");
 
+        //go to "images" and extract the list of mediaUUID
+        List<String> mediaUUIDs = data.getValuesAs(JsonObject.class)
+                    .stream()
+                    .flatMap(attractionJson -> attractionJson.getJsonArray("images").getValuesAs(JsonObject.class).stream())
+                    .map(imageJson -> imageJson.getString("uuid"))
+                    .toList();
+
         return data.stream()
             .map(j -> j.asJsonObject())
             .map(o -> {
@@ -75,11 +85,13 @@ public class AttractionsService {
                 String body = o.getString("body");
                 double rating = o.getJsonNumber("rating").doubleValue();
                 String officialWebsite = o.getString("officialWebsite");
-                return new Attractions(uuid, name, type, description, body, rating, officialWebsite);
+
+                String medialURL = 
+                
+                return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaURL);
             })
             .toList();
     }
-
 
     //getting single attraction
     public Attractions getAttractionDetailsByUUID(String uuid) {
@@ -121,6 +133,20 @@ public class AttractionsService {
         }
 
         JsonObject attractionJson = datadetails.getJsonObject(0); // there is only one attraction in the response
+        // Extract the "uuid" from the "images" array
+        JsonArray imagesArray = attractionJson.getJsonArray("images");
+
+        String mediaUUID = null;
+        String mediaURL = null;
+
+        if (!imagesArray.isEmpty()) {
+            JsonObject imageJson = imagesArray.getJsonObject(0); // assuming there is at least one image
+            mediaUUID = imageJson.getString("uuid");
+            // Move getMediaUrl inside the if block
+            mediaURL = mdSvc.getMediaUrl(mediaUUID);
+        } else {
+            return null; // or throw an exception indicating no image found
+        }
 
         return new Attractions(
                 attractionJson.getString("uuid"),
@@ -129,7 +155,8 @@ public class AttractionsService {
                 attractionJson.getString("description"),
                 attractionJson.getString("body"),
                 attractionJson.getJsonNumber("rating").doubleValue(),
-                attractionJson.getString("officialWebsite")
+                attractionJson.getString("officialWebsite"),
+                mediaURL
         );
     }
 
@@ -147,5 +174,4 @@ public class AttractionsService {
         attRepo.deleteFavourite(username);
         attRepo.addFavourite(username, attractions);
     }
-
 }

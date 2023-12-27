@@ -33,13 +33,9 @@ public class AttractionsController {
     @GetMapping
     public String getSearch(@RequestParam String username, Model model, HttpSession sess) {
 
-        //retrieve list of favourited attractions based on username
-        List<Attractions> favourite = attSvc.getFavourite(username);
-        sess.setAttribute("favourite", favourite);
         // Store the username in the session
         sess.setAttribute("username", username);
         model.addAttribute("username", username);
-
         return "search";
     }
 
@@ -73,6 +69,16 @@ public class AttractionsController {
         }
     
         return mav;
+    }
+
+    @GetMapping("/favourite") 
+    public String getFav(@RequestParam String username, Model model, HttpSession sess) {
+        //retrieve list of favourited attractions based on username
+        List<Attractions> favourite = attSvc.getFavourite(username);
+        sess.setAttribute("favourite", favourite);
+
+        return "favourite";
+
     }
     
 

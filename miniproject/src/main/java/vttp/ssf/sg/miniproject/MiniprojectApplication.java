@@ -9,12 +9,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import vttp.ssf.sg.miniproject.models.Attractions;
 import vttp.ssf.sg.miniproject.services.AttractionsService;
+import vttp.ssf.sg.miniproject.services.MediaService;
 
 @SpringBootApplication
 public class MiniprojectApplication implements CommandLineRunner{
 
 	@Autowired
 	private AttractionsService attSvc;
+
+	@Autowired
+	private MediaService mdSvc;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MiniprojectApplication.class, args);
