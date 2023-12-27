@@ -1,26 +1,28 @@
 package vttp.ssf.sg.miniproject.repo;
 
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import vttp.ssf.sg.miniproject.models.Attractions;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
-import vttp.ssf.sg.miniproject.models.Attractions;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AttractionsRepo {
 
-    //connect to redis
-    @Autowired @Qualifier ("attRedis")
+    // Connect to Redis
+    @Autowired
+    @Qualifier("attRedis")
     private RedisTemplate<String, String> template;
 
     public boolean hasFavourite(String username) {
@@ -35,9 +37,18 @@ public class AttractionsRepo {
         return List.of();
     }
 
-    public void saveFavourite(String username, Attractions attraction) {
-        String jsonString = convertObjectToJsonString(attraction);
+    public void deleteFavourite(String username) {
+        template.delete(username);
+    }
+
+    public void addFavourite(String username, List<Attractions> attractions) {
+        String jsonString = convertListToJsonString(attractions);
         template.opsForValue().set(username, jsonString);
+
+
+        // Log relevant information
+        System.out.println("Stored favorites for username: " + username);
+        System.out.println("Favorites content: " + jsonString);
     }
 
     private List<Attractions> convertJsonStringToObjectList(String jsonString) {
@@ -54,27 +65,33 @@ public class AttractionsRepo {
     }
 
     private Attractions convertJsonObjectToObject(JsonObject jsonObject) {
-        // Extract properties from JsonObject and create an Attractions object
+        String uuid = jsonObject.getString("uuid");
         String name = jsonObject.getString("name");
         String type = jsonObject.getString("type");
         String description = jsonObject.getString("description");
         String body = jsonObject.getString("body");
         double rating = jsonObject.getJsonNumber("rating").doubleValue();
+        String officialWebsite = jsonObject.getString("officialWebsite");
 
-        return new Attractions(name, type, description, body, rating);
+        return new Attractions(uuid, name, type, description, body, rating, officialWebsite);
     }
 
-    private String convertObjectToJsonString(Attractions attraction) {
-        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        jsonObjectBuilder.add("name", attraction.getName());
-        jsonObjectBuilder.add("type", attraction.getType());
-        jsonObjectBuilder.add("description", attraction.getDescription());
-        jsonObjectBuilder.add("body", attraction.getBody());
-        jsonObjectBuilder.add("rating", attraction.getRating());
+    private String convertListToJsonString(List<Attractions> attractionsList) {
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        
+        for (Attractions attraction : attractionsList) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                    .add("uuid", attraction.getUuid())
+                    .add("name", attraction.getName())
+                    .add("type", attraction.getType())
+                    .add("description", attraction.getDescription())
+                    .add("body", attraction.getBody())
+                    .add("rating", attraction.getRating())
+                    .add("officialWebsite", attraction.getOfficialWebsite());
+            arrayBuilder.add(objectBuilder);
+        }
 
-        return jsonObjectBuilder.build().toString();
+        JsonArray jsonArray = arrayBuilder.build();
+        return jsonArray.toString();
     }
-
-
-
 }

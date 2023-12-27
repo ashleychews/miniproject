@@ -1,0 +1,14 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20vh; 
+}
+
+.search {
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; /* Add rounded corners */
+}

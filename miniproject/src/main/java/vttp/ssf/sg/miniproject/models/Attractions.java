@@ -2,6 +2,8 @@ package vttp.ssf.sg.miniproject.models;
 
 public class Attractions {
 
+    private String uuid;
+
     private String name;
     
     private String type;
@@ -12,13 +14,40 @@ public class Attractions {
     
     private double rating;
 
-    public Attractions(String name, String type, String description, String body, double rating) {
+    private String officialWebsite;
+
+    public String getOfficialWebsite() {
+        return officialWebsite;
+    }
+
+    public void setOfficialWebsite(String officialWebsite) {
+        this.officialWebsite = officialWebsite;
+    }
+
+    // default constructor
+    public Attractions() {
+
+    }
+
+    public Attractions(String uuid, String name, String type, String description, String body, double rating, String officialWebsite) {
+        this.uuid = uuid;
         this.name = name;
         this.type = type;
         this.description = description;
         this.body = body;
         this.rating = rating;
+        this.officialWebsite = officialWebsite;
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
 
     public String getName() {
         return name;
@@ -64,11 +93,13 @@ public class Attractions {
     @Override
     public String toString() {
         return "Attraction{" +
-                "name='" + name + '\'' +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
-                ", rating=" + rating +
+                ", rating=" + rating + '\'' +
+                ", officialWebsite=" + officialWebsite +
                 '}';
     }
     

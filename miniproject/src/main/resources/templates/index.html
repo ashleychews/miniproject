@@ -5,17 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discover Singapore</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@700&display=swap" rel="stylesheet">
+
 </head>
     <body>
 
-        <form method="GET" action="/search.html">
-            <div>
-                <img src="/images/singapore.jpg" class="background">
+        <img src="/images/singapore.jpg" class="background">
 
-                Username:<input type="text" name="username" placeholder="name" required>
-                
-                <button type="submit">Login</button>
+        <div class="header-box">
+            <h2>"Embark on a journey of discovery and explore the captivating attractions of Singapore. Uncover the rich tapestry of experiences that await you in this vibrant city-state. 
+                From iconic landmarks to hidden gems, let the exploration begin! #DiscoverSG"</h2>
+        </div>
+
+            <div class="form_control">
+                <form method="GET" action="/search">
+                    <div>
+                        <div>
+                            <i class="login_icon fas fa-user"></i>
+                            <input type="text" class="login_input" name="username" placeholder="Username" required>
+                        </div>
+
+                        <div>
+                            <button class="button login_submit">
+                                <span class="button__text">Log In</span>
+                                <i class="button__icon fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                            
+                    </div>
+                </form>
             </div>
         </form>
         
