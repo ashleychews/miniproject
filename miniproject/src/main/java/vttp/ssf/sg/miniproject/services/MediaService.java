@@ -1,10 +1,10 @@
 package vttp.ssf.sg.miniproject.services;
 
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.util.StringUtils;
 
 @Service
 public class MediaService {
@@ -22,7 +22,6 @@ public class MediaService {
 
         final String fileType = "Default";
 
-
         String url = UriComponentsBuilder
                 .fromUriString("https://api.stb.gov.sg/media/download/v2/")
                 .path(mediaUUID)
@@ -32,7 +31,7 @@ public class MediaService {
         String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
 
         // Debugging: Print the constructed URL
-        System.out.println("Constructed URL: " + url);
+        //System.out.println("Constructed URL: " + url);
 
         //use .header to hide the api key
         RequestEntity<Void> req = RequestEntity.get(url)
@@ -41,9 +40,27 @@ public class MediaService {
         RestTemplate template = new RestTemplate();
 
         try {
-            template.exchange(req, String.class);
-
+            ResponseEntity<byte[]> response = template.exchange(req, byte[].class);
             return url;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // or handle the exception as needed
+        }
+    }
+
+    public byte[] fetchImageData(String mediaURL) {
+
+        String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
+
+        //use .header to hide the api key
+        RequestEntity<Void> req = RequestEntity.get(mediaURL)
+            .header("X-Api-Key", apiKey)
+            .build();
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<byte[]> responseEntity = restTemplate.exchange(req, byte[].class);
+            return responseEntity.getBody();
         } catch (Exception e) {
             e.printStackTrace();
             return null; // or handle the exception as needed

@@ -1,5 +1,7 @@
 package vttp.ssf.sg.miniproject.models;
 
+import java.util.Base64;
+
 public class Attractions {
 
     private String uuid;
@@ -18,6 +20,25 @@ public class Attractions {
 
     private String mediaURL;
 
+    private byte[] imageData;
+
+    private String base64ImageData;
+
+    public String getBase64ImageData() {
+        return base64ImageData;
+    }
+
+    public void setBase64ImageData(String base64ImageData) {
+        this.base64ImageData = base64ImageData;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
 
     // default constructor
     public Attractions() {
@@ -25,7 +46,7 @@ public class Attractions {
     }
 
     public Attractions(String uuid, String name, String type, String description, String body,
-        double rating, String officialWebsite, String mediaURL) {
+        double rating, String officialWebsite, String mediaURL, byte[] imageData, String base64ImageData) {
         this.uuid = uuid;
         this.name = name;
         this.type = type;
@@ -34,6 +55,12 @@ public class Attractions {
         this.rating = rating;
         this.officialWebsite = officialWebsite;
         this.mediaURL = mediaURL;
+        this.imageData = imageData;
+
+
+        if (imageData !=null) {
+            this.base64ImageData = Base64.getEncoder().encodeToString(imageData);
+        }
     }
 
     public String getUuid() {

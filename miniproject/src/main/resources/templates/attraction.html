@@ -7,12 +7,20 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Attraction Details</title>
 </head>
+
+    <!-- Header -->
+        <nav class="navbar navbar-light">
+            <div class="container">
+                <span class="navbar-brand">Discover Singapore attractions</span>
+            </div>
+        </nav>
+
     <body>
-        <h1>Attraction Details</h1>
 
         <!-- Display detailed information about the attraction -->
         <div class="card">
             <div class="card-header">
+                <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
                 <h5 class="card-title" th:text="${attraction.name}"></h5>
             </div>
             <div class="card-body">
@@ -22,12 +30,8 @@
                     <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
                     <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
                     <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
-                </p>
-
-                
-            </div>
-            <div class="row">
-                <img src="https://tih-api.stb.gov.sg/media/download/v2/uuid/107020de90b91134d4eadd3524d404c7bd2" alt="Image"></div>            
+                </p>               
+            </div>       
 
 
             <!-- Form to add the current attraction to favorites -->

@@ -15,44 +15,51 @@
     <body>
 
         <!-- Header -->
-        <div class="header-box">
-            <h2>Welcome <span th:text="${username}"></span></h2>
-        </div>
+        <nav class="navbar navbar-light">
+            <div class="container">
+              <span class="navbar-brand">Discover Singapore attractions</span>
+              <span>Welcome <span th:text="${username}"></span></span>
+            </div>
+        </nav>
 
         <!-- Search Form -->
             <form method="GET" th:action="@{/search/attractions}">
                 <div class="search-container">
                     <div class="search-box">
-                        <i class="search-icon fas fa-search"></i>
                         <input type="text" name="searchValues" class="search" placeholder="Search attractions" required>
-                        <button id="search-button" type="submit">Search</button>
+                        <button id="search-button" type="submit"><i class="search-icon fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
 
 
         <!-- Display Search Results -->
-        <h4>Search Results</h4>
+        <div class="container">
+            <section id = "gallery">
+                <div th:if="${attractions}" class="row">
+                    <div th:each="attraction : ${attractions}" class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <!-- Use Thymeleaf to conditionally render the image based on base64imageData -->
+                            <img class="card-img-top" style="height: 250px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                            <img class="card-img-top" style="height: 250px;" th:unless="${attraction.base64ImageData != null}" th:src="${attraction.mediaURL}" alt="Attraction Image">
+                            <div class="card-header">
+                                <h5 class="card-title" th:text="${attraction.name}"></h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <span class="type" th:text="${attraction.type}"></span><br>
+                                    <span th:text="${attraction.description}"></span>
+                                </p>
+                                <!-- Modify the link to include the username -->
+                                <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="btn-link">
+                                    <button type="button" class="btn btn-outline-success btn-sm">View Details</button>
+                                </a>
 
-        <div th:if="${attractions}" class="row">
-            <div th:each="attraction : ${attractions}" class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title" th:text="${attraction.name}"></h5>
-                        <img src="${attraction.mediaURL}" alt="Attraction Image">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                        </p>
-                        <!-- Modify the link to include the username -->
-                        <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="btn-link">
-                            <button type="button" class="btn btn-primary">View Details</button>
-                        </a>
-
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
         <!-- Bootstrap JS dependencies -->

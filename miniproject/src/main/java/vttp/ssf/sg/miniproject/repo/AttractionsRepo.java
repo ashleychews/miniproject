@@ -15,6 +15,7 @@ import jakarta.json.JsonValue;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Repository
@@ -81,9 +82,11 @@ public class AttractionsRepo {
                 .getJsonObject(0) // Assuming there is at least one image
                 .getString("uuid");
         String mediaURL = mdSvc.getMediaUrl(mediaUUID);
+        byte[] imageData = mdSvc.fetchImageData(mediaURL);
+        String base64imageData = Base64.getEncoder().encodeToString(imageData);
 
 
-        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaURL);
+        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaURL, imageData, base64imageData);
     }
 
     private String convertListToJsonString(List<Attractions> attractionsList) {

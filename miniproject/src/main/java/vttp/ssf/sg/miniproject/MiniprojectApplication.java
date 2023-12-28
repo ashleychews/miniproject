@@ -33,19 +33,11 @@ public class MiniprojectApplication implements CommandLineRunner{
 		//System.out.println("url:"+url);
 		//output:https://api.stb.gov.sg/content/attractions/v2/search?searchType=keyword&searchValues=singapore
 		
-		List<Attractions> attractions = attSvc.getAttractions("park");
-		System.out.println("attractions" + attractions);
+		// List<Attractions> attractions = attSvc.getAttractions("park");
+		//System.out.println("attractions" + attractions);
 		
 		// Attractions attractions = attSvc.getAttractionDetailsByUUID("002267aa36fc6314ad49266abf08adef735");
 		// System.out.println("attractions" + attractions);
-
-		String url = mdSvc.getMediaUrl("1010a2a130a0ae24afd9b02678a051c9a5a");
-		System.out.println("url" + url);
-
-		Attractions details = attSvc.getAttractionDetailsByUUID("002267aa36fc6314ad49266abf08adef735");
-
-
-
 	}
 	
 }
