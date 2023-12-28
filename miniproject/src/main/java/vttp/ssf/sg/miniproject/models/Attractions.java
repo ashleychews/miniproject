@@ -113,6 +113,7 @@ public class Attractions {
                 ", body='" + body + '\'' +
                 ", rating=" + rating + '\'' +
                 ", officialWebsite=" + officialWebsite +
+                ", mediaURL=" + mediaURL  +
                 '}';
     }
     

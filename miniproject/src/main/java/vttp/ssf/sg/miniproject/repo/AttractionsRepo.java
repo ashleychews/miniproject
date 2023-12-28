@@ -76,8 +76,14 @@ public class AttractionsRepo {
         double rating = jsonObject.getJsonNumber("rating").doubleValue();
         String officialWebsite = jsonObject.getString("officialWebsite");
 
+        // Fetch media URL for each attraction
+        String mediaUUID = jsonObject.getJsonArray("images")
+                .getJsonObject(0) // Assuming there is at least one image
+                .getString("uuid");
+        String mediaURL = mdSvc.getMediaUrl(mediaUUID);
 
-        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaUrl);
+
+        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaURL);
     }
 
     private String convertListToJsonString(List<Attractions> attractionsList) {
@@ -91,7 +97,8 @@ public class AttractionsRepo {
                     .add("description", attraction.getDescription())
                     .add("body", attraction.getBody())
                     .add("rating", attraction.getRating())
-                    .add("officialWebsite", attraction.getOfficialWebsite());
+                    .add("officialWebsite", attraction.getOfficialWebsite())
+                    .add("mediaURL", attraction.getMediaURL());
             arrayBuilder.add(objectBuilder);
         }
 
