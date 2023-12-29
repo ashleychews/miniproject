@@ -78,10 +78,8 @@ public class AttractionsController {
         sess.setAttribute("favourite", favourite);
 
         return "favourite";
-
     }
     
-
     @PostMapping("/addtofavorites")
     public ModelAndView addToFavorites(
             @Valid @ModelAttribute("attraction") Attractions attraction,
