@@ -1,8 +1,9 @@
 package vttp.ssf.sg.miniproject.models;
 
+import java.io.Serializable;
 import java.util.Base64;
 
-public class Attractions {
+public class Attractions implements Serializable{
 
     private String uuid;
 
@@ -62,6 +63,17 @@ public class Attractions {
             this.base64ImageData = Base64.getEncoder().encodeToString(imageData);
         }
     }
+
+    public Attractions(String name, String type, String description, String body, double rating, 
+    String officialWebsite) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.body = body;
+        this.rating = rating;
+        this.officialWebsite = officialWebsite;
+    }
+
 
     public String getUuid() {
         return uuid;

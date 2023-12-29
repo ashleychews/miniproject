@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <!-- Display favorite attractions -->
-    <h1>Favorites</h1>
+    <body>
+        <!-- Display favorite attractions -->
+        <h1>Favorites</h1>
 
-    <div th:if="${favourite}">
-        <h3 th:text="${'Favorite Attractions'}"></h3>
-        <div th:each="attraction : ${favourite}" class="attraction-card">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title" th:text="${attraction.name}"></h5>
-                </div>
+        <div data-th-if="${#lists.isEmpty(favourite)}">
+            <h2>You have no Favourites</h2>
+        </div>
 
-                <div class="card-body">
-                    <p class="card-text">
-                        <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                    </p>
-                    <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="btn-link">
-                        <button type="button" class="btn btn-primary">View Details</button>
-                    </a>
+        <div data-th-unless="${#lists.isEmpty(favourite)}">
+            <div th:each="attraction : ${favourite}">
+                <!-- Display detailed information about each attraction -->
+                <div class="card">
+                    <div class="card-header">
+                        <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                        <h5 class="card-title" th:text="${attraction.name}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
+                            <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
+                            <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
+                            <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
+                            <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
+                        </p>               
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

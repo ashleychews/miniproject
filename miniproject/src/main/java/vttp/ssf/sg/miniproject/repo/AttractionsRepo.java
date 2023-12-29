@@ -30,12 +30,12 @@ public class AttractionsRepo {
     private MediaService mdSvc;
 
     public boolean hasFavourite(String username) {
-        return template.hasKey(username);
+        return template.opsForHash().hasKey(username, "attractions");
     }
 
     public List<Attractions> getFavAtt(String username) {
         if (hasFavourite(username)) {
-            String jsonString = template.opsForValue().get(username);
+            String jsonString = (String) template.opsForHash().get(username, "attractions");
             return convertJsonStringToObjectList(jsonString);
         }
         return List.of();
@@ -47,7 +47,9 @@ public class AttractionsRepo {
 
     public void addFavourite(String username, List<Attractions> attractions) {
         String jsonString = convertListToJsonString(attractions);
-        template.opsForValue().set(username, jsonString);
+
+        // Store "username" as the key, "attractions" as the hashkey, and jsonString as the hashvalue
+        template.opsForHash().put(username, "attractions", jsonString);
 
 
         // Log relevant information for testing
@@ -94,14 +96,12 @@ public class AttractionsRepo {
         
         for (Attractions attraction : attractionsList) {
             JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
-                    .add("uuid", attraction.getUuid())
                     .add("name", attraction.getName())
                     .add("type", attraction.getType())
                     .add("description", attraction.getDescription())
                     .add("body", attraction.getBody())
                     .add("rating", attraction.getRating())
-                    .add("officialWebsite", attraction.getOfficialWebsite())
-                    .add("mediaURL", attraction.getMediaURL());
+                    .add("officialWebsite", attraction.getOfficialWebsite());
             arrayBuilder.add(objectBuilder);
         }
 

@@ -29,27 +29,33 @@
 
         <!-- Display detailed information about the attraction -->
         <div class="card">
-            <div class="card-header">
-                <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
-                <h5 class="card-title" th:text="${attraction.name}"></h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                    <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
-                    <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
-                    <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
-                    <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
-                </p>               
-            </div>       
+            <form method = "POST" th:action="@{/search/addtofavorites}">
+                <div class="card-header">
+                    <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                    <h5 class="card-title" th:text="${attraction.name}"></h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
+                        <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
+                        <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
+                        <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
+                        <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
+                    </p>               
+                </div>       
+    
+                <!-- Hidden input fields for form data -->
+                <input type="hidden" name="username" th:value="${username}" />
+                <input type="hidden" name="type" th:value="${attraction.type}" />
+                <input type="hidden" name="description" th:value="${attraction.description}" />
+                <input type="hidden" name="body" th:value="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}" />
+                <input type="hidden" name="rating" th:value="${attraction.rating}" />
+                <input type="hidden" name="officialWebsite" th:value="${attraction.officialWebsite}" />
+
+                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></button>
 
 
-            <!-- Form to add the current attraction to favorites -->
-            <form method="post" action="/search/addtofavorites">
-                <!-- Form fields -->
-                <button class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></button>
             </form>
-            
         </div>
 
 
