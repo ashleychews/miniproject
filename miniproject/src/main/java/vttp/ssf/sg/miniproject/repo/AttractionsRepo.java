@@ -51,7 +51,6 @@ public class AttractionsRepo {
         // Store "username" as the key, "attractions" as the hashkey, and jsonString as the hashvalue
         template.opsForHash().put(username, "attractions", jsonString);
 
-
         // Log relevant information for testing
         System.out.println("Stored favorites for username: " + username);
         System.out.println("Favorites content: " + jsonString);
