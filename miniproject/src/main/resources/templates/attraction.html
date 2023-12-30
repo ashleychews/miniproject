@@ -46,6 +46,9 @@
     
                 <!-- Hidden input fields for form data -->
                 <input type="hidden" name="username" th:value="${username}" />
+                
+                <input type="hidden" name="uuid" th:value="${attraction.uuid}" />
+                <input type="hidden" name="name" th:value="${attraction.name}"/>
                 <input type="hidden" name="type" th:value="${attraction.type}" />
                 <input type="hidden" name="description" th:value="${attraction.description}" />
                 <input type="hidden" name="body" th:value="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}" />

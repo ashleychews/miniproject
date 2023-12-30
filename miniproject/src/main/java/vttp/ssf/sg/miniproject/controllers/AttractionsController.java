@@ -5,13 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vttp.ssf.sg.miniproject.models.Attractions;
 import vttp.ssf.sg.miniproject.services.AttractionsService;
-import vttp.ssf.sg.miniproject.utility.Utils;
 
 @Controller
 @RequestMapping
@@ -33,7 +30,6 @@ public class AttractionsController {
     public String getLogin() {
         return "index";
     }
-
 
     //search attractions
     //shows the list of attractions based on search
@@ -49,7 +45,7 @@ public class AttractionsController {
     //populate the list of attractions on search form
     @GetMapping("/search/attractions")
     public ModelAndView getAttractions(@RequestParam String searchValues, HttpSession sess) {
-        ModelAndView mav = new ModelAndView("search");
+        ModelAndView mav = new ModelAndView("searchresults");
         List<Attractions> attractions = attSvc.getAttractions(searchValues);
 
         // Retrieve the username from the session
@@ -89,15 +85,9 @@ public class AttractionsController {
 
         //retrieve list of favourited attractions based on username
         List<Attractions> favourite = attSvc.getFavourite(username);
-        sess.setAttribute("favourite", favourite);
 
         model.addAttribute("favourite", favourite);
         model.addAttribute("username", username);
-
-        // Example logging
-        System.out.println("Username: " + username);
-        System.out.println("Favourite Attractions: " + favourite);
-
 
         return "favourite";
     }
@@ -108,7 +98,7 @@ public class AttractionsController {
             @Valid @ModelAttribute("attraction") Attractions attraction,
             BindingResult bindings,
             HttpSession sess,
-            @RequestParam String username, Model model, @RequestBody MultiValueMap<String,String> form) {
+            @RequestParam String username, Model model) {
 
         // Retrieve the username from the session
         String user = (String) sess.getAttribute("username");
@@ -121,18 +111,10 @@ public class AttractionsController {
             return "error";
         }
 
-        // Get the list of favorite attractions from the session
-        List<Attractions> favAttractions = Utils.getFavourite(sess);
+        //retrieve list of favourited attractions based on username
+        List<Attractions> favAttractions = attSvc.getFavourite(username);
 
-        // Add the new attraction to the list of favorite attractions
-        String type = form.getFirst("type");
-        String description = form.getFirst("description");
-        String body = form.getFirst("body");
-        double rating = Double.parseDouble(form.getFirst("rating"));
-        String officialWebsite = form.getFirst("officialWebsite");
-
-        Attractions attraction1 = new Attractions(username, type, description, body, rating, officialWebsite);
-        favAttractions.add(attraction1);
+        favAttractions.add(attraction);
 
         // Update the session with the modified list
         sess.setAttribute("favourite", favAttractions);

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import vttp.ssf.sg.miniproject.models.Attractions;
-import vttp.ssf.sg.miniproject.services.MediaService;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -15,7 +14,7 @@ import jakarta.json.JsonValue;
 
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -26,9 +25,6 @@ public class AttractionsRepo {
     @Qualifier("attRedis")
     private RedisTemplate<String, String> template;
 
-    @Autowired
-    private MediaService mdSvc;
-
     public boolean hasFavourite(String username) {
         return template.opsForHash().hasKey(username, "attractions");
     }
@@ -38,7 +34,7 @@ public class AttractionsRepo {
             String jsonString = (String) template.opsForHash().get(username, "attractions");
             return convertJsonStringToObjectList(jsonString);
         }
-        return List.of();
+        return new LinkedList<>() ;
     }
 
     public void deleteFavourite(String username) {
@@ -46,11 +42,23 @@ public class AttractionsRepo {
     }
 
     public void addFavourite(String username, List<Attractions> attractions) {
-        String jsonString = convertListToJsonString(attractions);
+        List<Attractions> existingAttractions = getFavAtt(username);
 
-        // Store "username" as the key, "attractions" as the hashkey, and jsonString as the hashvalue
+        // Check for duplicates and add only new attractions
+        for (Attractions newAttraction : attractions) {
+            if (!containsAttraction(existingAttractions, newAttraction)) {
+                existingAttractions.add(newAttraction);
+            } else {
+                // Log a message or handle the case where the attraction already exists
+                System.out.println("Attraction already exists in favorites: " + newAttraction.getName());
+            }
+        }
+    
+        String jsonString = convertListToJsonString(existingAttractions);
+    
+        // Update the Redis set
         template.opsForHash().put(username, "attractions", jsonString);
-
+    
         // Log relevant information for testing
         System.out.println("Stored favorites for username: " + username);
         System.out.println("Favorites content: " + jsonString);
@@ -78,16 +86,7 @@ public class AttractionsRepo {
         double rating = jsonObject.getJsonNumber("rating").doubleValue();
         String officialWebsite = jsonObject.getString("officialWebsite");
 
-        // Fetch media URL for each attraction
-        String mediaUUID = jsonObject.getJsonArray("images")
-                .getJsonObject(0) // Assuming there is at least one image
-                .getString("uuid");
-        String mediaURL = mdSvc.getMediaUrl(mediaUUID);
-        byte[] imageData = mdSvc.fetchImageData(mediaURL);
-        String base64imageData = Base64.getEncoder().encodeToString(imageData);
-
-
-        return new Attractions(uuid, name, type, description, body, rating, officialWebsite, mediaURL, imageData, base64imageData);
+        return new Attractions(uuid, name, type, description, body, rating, officialWebsite);
     }
 
     private String convertListToJsonString(List<Attractions> attractionsList) {
@@ -95,6 +94,7 @@ public class AttractionsRepo {
         
         for (Attractions attraction : attractionsList) {
             JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                    .add("uuid", attraction.getUuid())
                     .add("name", attraction.getName())
                     .add("type", attraction.getType())
                     .add("description", attraction.getDescription())
@@ -107,4 +107,17 @@ public class AttractionsRepo {
         JsonArray jsonArray = arrayBuilder.build();
         return jsonArray.toString();
     }
+
+
+    // Check if a single attraction exists in the list
+    private boolean containsAttraction(List<Attractions> existingAttractions, Attractions newAttraction) {
+        for (Attractions existingAttraction : existingAttractions) {
+            // Check if uuid is the same
+            if (existingAttraction.getUuid().equals(newAttraction.getUuid())) {
+                return true; // The attraction already exists
+            }
+        }
+        return false; // The attraction does not exist in the list
+    }
+
 }

@@ -64,8 +64,9 @@ public class Attractions implements Serializable{
         }
     }
 
-    public Attractions(String name, String type, String description, String body, double rating, 
+    public Attractions(String uuid, String name, String type, String description, String body, double rating, 
     String officialWebsite) {
+        this.uuid = uuid;
         this.name = name;
         this.type = type;
         this.description = description;

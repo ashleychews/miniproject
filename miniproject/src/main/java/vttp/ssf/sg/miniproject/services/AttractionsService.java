@@ -208,7 +208,6 @@ public class AttractionsService {
                 mediaURL,
                 imageData,
                 base64imageData
-
         );
     }
 

@@ -18,55 +18,32 @@
     <title>Search</title>
 </head>
     <body>
+        
+        <form method="GET" th:action="@{/search/attractions}">
+            <input type="hidden" name="username" th:value="${username}" />
+            <!-- Header -->
+            <nav class="navbar navbar-light">
+                <div class="container">
+                <img src="/images/stb.png" alt="Logo" class="navbar-logo" style="max-width: 100px;">
+                <span class="navbar-brand">Discover Singapore attractions</span>
+                </div>
 
-        <!-- Header -->
-        <nav class="navbar navbar-light">
-            <div class="container">
-            <img src="/images/stb.png" alt="Logo" class="navbar-logo" style="max-width: 100px;">
-              <span class="navbar-brand">Discover Singapore attractions</span>
-              <span>Welcome <span th:text="${username}"></span></span>
+                <ul class="menu-items">
+                    <li><a th:href="@{/search(username=${username})}">Search</a></li>
+                    <li><a href="/search/favourite">View Favourites</a></li>
+                    <li>Welcome <span th:text="${username}"></span></li>
+                </ul>
+            </nav>
+
+            <!-- Search Form -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" name="searchValues" class="search" placeholder="Search attractions" required>
+                    <button id="search-button" type="submit"><i class="search-icon fas fa-search"></i></button>
+                </div>
             </div>
-        </nav>
 
-        <!-- Search Form -->
-            <form method="GET" th:action="@{/search/attractions}">
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" name="searchValues" class="search" placeholder="Search attractions" required>
-                        <button id="search-button" type="submit"><i class="search-icon fas fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-
-
-        <!-- Display Search Results -->
-        <div class="container">
-            <section id = "gallery">
-                <div th:if="${attractions}" class="row">
-                    <div th:each="attraction : ${attractions}" class="col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <!-- Use Thymeleaf to conditionally render the image based on base64imageData -->
-                            <img class="card-img-top" style="height: 250px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
-                            <img class="card-img-top" style="height: 250px;" th:unless="${attraction.base64ImageData != null}" th:src="${attraction.mediaURL}" alt="Attraction Image">
-                            <div class="card-header">
-                                <h5 class="card-title" th:text="${attraction.name}"></h5>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <span class="type" th:text="${attraction.type}"></span><br>
-                                    <span th:text="${attraction.description}"></span>
-                                </p>
-                                <!-- Modify the link to include the username -->
-                                <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="btn-link">
-                                    <button type="button" class="btn btn-outline-success btn-sm">View Details</button>
-                                </a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+        </form>
 
         <!-- Bootstrap JS dependencies -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
