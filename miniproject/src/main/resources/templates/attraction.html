@@ -20,19 +20,18 @@
         <!-- Header -->
         <nav class="navbar navbar-light">
             <div class="navbar-container">
-                <img src="/images/merlionicon.jpg" alt="Logo" class="navbar-logo" style="max-width: 100px;">
+                <img src="/images/merlionicon.jpg" alt="Logo" class="navbar-logo">
                 <span class="navbar-brand">Discover Singapore</span>
 
                 <ul class="menu-items">
+                    <li>Welcome <span class="username" th:text="${username}"></span></li>
                     <li><a th:href="@{/search(username=${username})}">Search</a></li>
                     <li><a href="/search/favourite">View Favourites</a></li>
-                    <li>Welcome <span th:text="${username}"></span></li>
+                    <li><a href="/">Log out</a></li>
                 </ul>
 
             </div>
         </nav>
-
-        <br>
 
         <!-- Display detailed information about the attraction -->
         <div class="container">
@@ -41,7 +40,7 @@
                     <div class="card-header">
                         <div class="image-container">
                             <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
-                            <img style="height: 500px;"th:unless="${attraction.base64ImageData != null}" th:src="${attraction.mediaURL}" alt="Attraction Image">
+                            <img style="height: 300px;"th:unless="${attraction.base64ImageData != null}" th:src="${attraction.mediaURL}" alt="Attraction Image">
                         </div>
                         <div class="title-container">
                             <h5 class="card-title" th:text="${attraction.name}"></h5>
@@ -51,7 +50,7 @@
                     <div class="card-body">
                         <p class="card-text">
                             <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                            <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
+                            <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span><br>
                             <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
                             <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
                         </p>               
@@ -68,9 +67,11 @@
                     <input type="hidden" name="rating" th:value="${attraction.rating}" />
                     <input type="hidden" name="officialWebsite" th:value="${attraction.officialWebsite}" />
 
-                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></button>
-
-
+                    <!-- Link to view details -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-heart">Add to Favourites</i></button>
+                        <a th:href="@{/searchattractions(uuid=${attraction.uuid})}" class="btn btn-outline-primary btn-sm">View Details in JSON</a>
+                    </div>
                 </form>
             </div>  
         </div>

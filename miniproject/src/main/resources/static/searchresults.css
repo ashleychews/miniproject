@@ -3,20 +3,23 @@
 .navbar {
     border-bottom: 3px solid #e0e0e0;
     box-shadow: 0px 5px 10px 0px #aaa;
+    font-family: 'Montserrat', sans-serif;
+    height: 80px;
+    z-index: 100;
 }
 
-.navbar-brand {
-    text-transform: uppercase;                               
+.navbar-brand {                             
     font-weight:800;
-    font-size: 150%;
+    font-size: 20px;
+    margin-bottom: 2rem;
 }
 
 .navbar-container{
     display: flex;
     justify-content: space-between;
-    height: 64px;
     align-items: center;
 }
+
 
 .navbar a{
     color: #444;
@@ -37,20 +40,40 @@
     list-style: none;
     margin-bottom: 2rem;
     margin-left: 1rem;
-    font-size: 1.1rem;
+    font-size: 15px;
     font-weight: 500;
 }
-
 
 .menu-items{
     order: 2;
     display: flex;
+    margin-left: 800px;
+}
+
+.navbar-logo {
+    max-width: 60px; 
+    max-height: 50px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
+.username {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ac00e6;
+}
+
+.container {
+    margin-top: 40px;
 }
 
 .type {
     border-radius: 5px;
-    background-color: #ffffe6;
-    padding: 5px;
+    color: white;
+    background-color: #ff4d4d;
+    padding: 3px;
+    font-size: 15px;
 }
 
 #gallery {

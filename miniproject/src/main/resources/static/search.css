@@ -4,19 +4,22 @@
     border-bottom: 3px solid #e0e0e0;
     box-shadow: 0px 5px 10px 0px #aaa;
     font-family: 'Montserrat', sans-serif;
+    height: 80px;
+    z-index: 100;
 }
 
 .navbar-brand {                             
     font-weight:800;
-    font-size: 120%;
+    font-size: 20px;
+    margin-bottom: 2rem;
 }
 
 .navbar-container{
     display: flex;
     justify-content: space-between;
-    height: 64px;
     align-items: center;
 }
+
 
 .navbar a{
     color: #444;
@@ -37,7 +40,7 @@
     list-style: none;
     margin-bottom: 2rem;
     margin-left: 1rem;
-    font-size: 1.1rem;
+    font-size: 15px;
     font-weight: 500;
 }
 
@@ -46,13 +49,21 @@
     display: flex;
 }
 
+.navbar-logo {
+    max-width: 60px; 
+    max-height: 50px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
 .search-container {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 15vh; 
-    position: relative;
+    height: 100%;
     width: 85%;
+    margin-top: 30px; /* Add margin to create a gap */
 }
 
 .search-box {
@@ -64,14 +75,14 @@
     max-width: 500px; /* Limit the maximum width */
     padding: 15px; 
     padding-right: 50px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     border: 1px solid #ccc; 
     border-radius: 50px; /* Add rounded corners */
 }
 
 .search-icon {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 460px; /* Adjust this value as needed */
     transform: translateY(-50%);
     color:rgba(0, 0, 0, 0.564);
@@ -81,9 +92,6 @@
     cursor: pointer;
     border: none;
     background-color: transparent;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .search:hover{
@@ -102,7 +110,7 @@ h1 {
     margin: 0;
     color: #333;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 800;
 }
 
@@ -111,12 +119,18 @@ span {
 }
 
 h2 {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 800;
 }
 
 .red {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 800;
     color: #ff4d4d ;
+}
+
+.username {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ac00e6;
 }
