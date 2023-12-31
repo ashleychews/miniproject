@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+.navbar {
+    border-bottom: 3px solid #e0e0e0;
+    box-shadow: 0px 5px 10px 0px #aaa;
+}
+
+.navbar-brand {
+    text-transform: uppercase;
+    font-family: 'Work Sans', sans-serif;
+    font-weight:800;
+    font-size: 150%;
+}
+
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+}
+
+.navbar a{
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover{
+    color: #117964;
+}
+
+.navbar .menu-items {
+    padding-top: 20px;
+}
+
+.menu-items li {
+    list-style: none;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+.menu-items{
+    order: 2;
+    display: flex;
+}
+
+
+
+.card {
+    font-family: 'Montserrat', sans-serif;
+}

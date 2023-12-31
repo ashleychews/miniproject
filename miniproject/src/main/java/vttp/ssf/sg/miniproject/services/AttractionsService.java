@@ -137,7 +137,6 @@ public class AttractionsService {
         return attractions;
     }
 
-
     //getting single attraction
     public Attractions getAttractionDetailsByUUID(String uuid) {
         String payloaddetails;
@@ -175,6 +174,8 @@ public class AttractionsService {
             return null; // or throw an exception indicating no data found
         }
 
+        String defaultMediaURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png";
+
         JsonObject attractionJson = datadetails.getJsonObject(0); // there is only one attraction in the response
         // Extract the "uuid" from the "images" array
         JsonArray imagesArray = attractionJson.getJsonArray("images");
@@ -182,33 +183,62 @@ public class AttractionsService {
         String mediaUUID = null;
         String mediaURL = null;
         byte[] imageData = null;
-        String base64imageData = null;
 
-        if (!imagesArray.isEmpty()) {
+        //check if imagesArray is empty
+        if (imagesArray != null && !imagesArray.isEmpty()) {
             JsonObject imageJson = imagesArray.getJsonObject(0); // assuming there is at least one image
             mediaUUID = imageJson.getString("uuid");
-            // Move getMediaUrl inside the if block
-            mediaURL = mdSvc.getMediaUrl(mediaUUID);
-            imageData = mdSvc.fetchImageData(mediaURL);
 
-            base64imageData = Base64.getEncoder().encodeToString(imageData);
+            // if mediaUUID is not empty
+            if (mediaUUID != null && !mediaUUID.trim().isEmpty()) {
+                try {
+                    mediaURL = mdSvc.getMediaUrl(mediaUUID);
+                    imageData = mdSvc.fetchImageData(mediaURL);
 
-        } else {
-            return null; // or throw an exception indicating no image found
-        }
+                    // Check if imageData is not null before encoding
+                    if (imageData != null) {
+                        // Convert imageData to base64-encoded string
+                        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
+                        // Update the Attractions constructor to include the base64ImageData
+                        return new Attractions(
+                                attractionJson.getString("uuid"),
+                                attractionJson.getString("name"),
+                                attractionJson.getString("type"),
+                                attractionJson.getString("description"),
+                                attractionJson.getString("body"),
+                                attractionJson.getJsonNumber("rating").doubleValue(),
+                                attractionJson.getString("officialWebsite"),
+                                mediaURL,
+                                imageData,
+                                base64ImageData
+                            );
+                        }
+                    } catch (Exception e) {
+                        mediaURL = defaultMediaURL;
+                    }
+                }
 
-        return new Attractions(
-                attractionJson.getString("uuid"),
-                attractionJson.getString("name"),
-                attractionJson.getString("type"),
-                attractionJson.getString("description"),
-                attractionJson.getString("body"),
-                attractionJson.getJsonNumber("rating").doubleValue(),
-                attractionJson.getString("officialWebsite"),
-                mediaURL,
-                imageData,
-                base64imageData
-        );
+                // Media UUID is empty, retrieve the image URL directly
+                String imageUrl = imageJson.getString("url");
+                if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                    mediaURL = imageUrl;
+                }
+            }
+
+    
+            // No images or error fetching image, use a default URL
+            return new Attractions(
+                    attractionJson.getString("uuid"),
+                    attractionJson.getString("name"),
+                    attractionJson.getString("type"),
+                    attractionJson.getString("description"),
+                    attractionJson.getString("body"),
+                    attractionJson.getJsonNumber("rating").doubleValue(),
+                    attractionJson.getString("officialWebsite"),
+                    mediaURL,
+                    imageData,
+                    null
+            );
     }
 
     //get favourites based on the username

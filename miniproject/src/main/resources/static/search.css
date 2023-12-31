@@ -1,69 +1,122 @@
-@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,900,800,500,700,600);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 .navbar {
     border-bottom: 3px solid #e0e0e0;
     box-shadow: 0px 5px 10px 0px #aaa;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.navbar-brand {
-    text-transform: uppercase;
-    font-family: 'Work Sans', sans-serif;
+.navbar-brand {                             
     font-weight:800;
-    font-size: 150%;
+    font-size: 120%;
 }
 
-.gallery {
+.navbar-container{
     display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+}
+
+.navbar a{
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover{
+    color: #117964;
+}
+
+.navbar .menu-items {
+    padding-top: 20px;
+}
+
+.menu-items li {
+    list-style: none;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.menu-items{
+    order: 2;
+    display: flex;
 }
 
 .search-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     height: 15vh; 
     position: relative;
     width: 85%;
 }
 
+.search-box {
+    position: relative;
+}
+
 .search {
-    width: 200%; 
+    width: 250%; /* Use a percentage for responsiveness */
+    max-width: 500px; /* Limit the maximum width */
     padding: 15px; 
+    padding-right: 50px;
     box-sizing: border-box; 
     border: 1px solid #ccc; 
     border-radius: 50px; /* Add rounded corners */
-    display: inline-block;
 }
 
 .search-icon {
-    margin: 10px;
+    position: absolute;
+    top: 50%;
+    left: 460px; /* Adjust this value as needed */
+    transform: translateY(-50%);
     color:rgba(0, 0, 0, 0.564);
 }
 
-#search-button{
-    position: absolute;
+#search-button {
     cursor: pointer;
     border: none;
     background-color: transparent;
-    right: 25%; 
-    top: 52%;
+    right: 10%;
+    top: 50%;
     transform: translateY(-50%);
 }
 
 .search:hover{
     cursor: text;
-
 }
 
-.type {
-    border-radius: 5px;
-    background-color: #ffffe6;
-    padding: 5px;
+.card {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.menu-items li{
-    list-style: none;
-    margin-left: 1.5rem;
-    font-size: 1rem;
+h1, h2, span{
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    margin: 0;
+    color: #333;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+span {
+    font-size: 15px;
+}
+
+h2 {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.red {
+    font-size: 25px;
+    font-weight: 800;
+    color: #ff4d4d ;
 }
