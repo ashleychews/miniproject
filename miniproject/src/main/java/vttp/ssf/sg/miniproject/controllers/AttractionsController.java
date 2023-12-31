@@ -27,7 +27,7 @@ public class AttractionsController {
     private AttractionsService attSvc;
 
     @GetMapping
-    public String getLogin() {
+    public String getLogin(@ModelAttribute("username") String username, Model model) {
         return "index";
     }
 

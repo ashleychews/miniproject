@@ -50,7 +50,7 @@
                                 <p class="card-text">
                                     <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
                                     <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
-                                    <strong>Body:</strong> <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
+                                    <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
                                     <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
                                     <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
                                 </p>               
