@@ -1,5 +1,6 @@
 package vttp.ssf.sg.miniproject.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class MediaService {
 
-    // @Value("${attractionsapi.key}")
-    // private String apiKey;
+    @Value("${attractionsapi.key}")
+    private String apiKey;
 
     //GET
     //https://api.stb.gov.sg/media/download/v2/{media uuid}?fileType=Thumbnail%201080h
@@ -27,8 +28,6 @@ public class MediaService {
                 .path(mediaUUID)
                 .queryParam("fileType", fileType)
                 .toUriString();
-
-        String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
 
         // Debugging: Print the constructed URL
         //System.out.println("Constructed URL: " + url);
@@ -49,8 +48,6 @@ public class MediaService {
     }
 
     public byte[] fetchImageData(String mediaURL) {
-
-        String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
 
         //use .header to hide the api key
         RequestEntity<Void> req = RequestEntity.get(mediaURL)

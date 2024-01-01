@@ -44,29 +44,30 @@
             <div class="container">
                 <h2>Our <span class="red">Recommendations</span></h2>
                 <div class="row">
+
                     <div class="col-lg-4 mb-4">
-                        <a th:href="@{/search/attractions(username=${username}, searchValues=${'jewel'})}">
+                        <a th:href="@{/search/attractions/0023229dc7846ac413386fecb3798df1eb0}">
                             <div class="card h-100">
                                 <div class="image-container">
-                                    <img class="card-img-top" src="/images/jewel.jpg">
+                                    <img class="card-img-top" src="/images/merlionpark.jpg" style="height: 275px;">
                                 </div>
                                 <div class="card-body">
-                                    <h1>Jewel Changi</h1>
-                                    <span>Discover a world of wonder at Jewel Changi - where nature meets retail</span>
+                                    <h1>Merlion Park</h1>
+                                    <span>A symbol of Singapore's vibrant spirit, stands majestically against the city skyline</span>
                                 </div>
                             </div>
-                        </a> 
+                        </a>
                     </div>
 
                     <div class="col-lg-4 mb-4">
-                        <a th:href="@{/search/attractions/0027d671f944c744aad8ccd7241a1c6cc2f}">
+                        <a th:href="@{/search/attractions/00247a2707af0134f6ab71e50c29285cedf}">
                             <div class="card h-100">
                                 <div class="image-container">
-                                    <img class="card-img-top" src="/images/Esplanade.jpg">
+                                    <img class="card-img-top" src="/images/flyer.jpg">
                                 </div>
                                 <div class="card-body">
-                                    <h1>Esplanade</h1>
-                                    <span>The iconic heart of arts and culture in the city</span>
+                                    <h1>Singapore Flyer</h1>
+                                    <span>Soar above the city and enjoy breathtaking panoramic views of Singapore's skyline from the Singapore Flyer</span>
                                 </div>
                             </div>
                         </a>
@@ -85,6 +86,50 @@
                             </div>
                         </a>
                     </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <a th:href="@{/search/attractions/002404027a5c89240478eb318fe1f240298}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/chinatown.jpg" style="height: 275px;">
+                                </div>
+                                <div class="card-body">
+                                    <h1>Chinatown</h1>
+                                    <span>A tapestry of history and heritage woven into the fabric of modern Singapore</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <a th:href="@{/search/attractions/002f5051bfa31074cc8a34a49082d9001fa}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/botanic.jpg" style="height: 275px;">
+                                </div>
+                                <div class="card-body">
+                                    <h1>Singapore Botanic Garden</h1>
+                                    <span>A living tapestry of flora and fauna awaits, inviting you to unwind and discover the botanical wonders that define this green jewel of Singapore</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <a th:href="@{/search/attractions(username=${username}, searchValues=${'jewel'})}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/jewel.jpg">
+                                </div>
+                                <div class="card-body">
+                                    <h1>Jewel Changi</h1>
+                                    <span>Discover a world of wonder at Jewel Changi - where nature meets retail</span>
+                                </div>
+                            </div>
+                        </a> 
+                    </div>
+
+
                 </div>
             </div>
 

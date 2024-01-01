@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ import vttp.ssf.sg.miniproject.repo.AttractionsRepo;
 @Service
 public class AttractionsService {
     
-    // @Value("${attractionsapi.key}")
-    // private String apiKey;
+    @Value("${attractionsapi.key}")
+    private String apiKey;
 
     @Autowired
     private AttractionsRepo attRepo;
@@ -43,8 +44,6 @@ public class AttractionsService {
                 .fromUriString("https://api.stb.gov.sg/content/attractions/v2/search?searchType=keyword")
                 .queryParam("searchValues", searchValues)
                 .toUriString();
-
-        String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
 
         // use .header to hide the API key
         RequestEntity<Void> req = RequestEntity.get(url)
@@ -146,8 +145,6 @@ public class AttractionsService {
                 .fromUriString("https://api.stb.gov.sg/content/attractions/v2/search?searchType=uuids")
                 .queryParam("searchValues", uuid)
                 .toUriString();
-
-        String apiKey = "D4Q6iNhqOUU5wAnJoaHiRO7FnZPAkbVG"; // TO DELETE!!!
 
         //use .header to hide the api key
         RequestEntity<Void> req = RequestEntity.get(url)
