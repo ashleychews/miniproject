@@ -47,7 +47,6 @@
 .menu-items{
     order: 2;
     display: flex;
-    margin-left: 770px;
 }
 
 .navbar-logo {
@@ -87,5 +86,14 @@ h5 {
 h5, .container {
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+
+.type {
+    border-radius: 5px;
+    color: white;
+    background-color: #ff4d4d;
+    padding: 3px;
+    font-size: 12px;
+    margin-bottom: 20px;
 }
 

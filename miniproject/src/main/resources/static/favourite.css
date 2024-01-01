@@ -44,10 +44,9 @@
     font-weight: 500;
 }
 
-.menu-items{
+.menu-items {
     order: 2;
     display: flex;
-    margin-left: 800px;
 }
 
 .navbar-logo {
@@ -88,4 +87,8 @@ h5 {
 
 .card-link {
     color: black;
+}
+
+.card-title {
+    margin-top: 10px;
 }

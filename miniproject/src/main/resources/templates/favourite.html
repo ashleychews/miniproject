@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     <link rel="stylesheet" href="/favourite.css">
 
     <title>Document</title>
@@ -40,25 +42,23 @@
             <div data-th-unless="${#lists.isEmpty(favourite)}">
                 <div th:each="attraction : ${favourite}">
                 <!-- Display detailed information about each attraction -->
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="card-link">
-                            <div class="card">
-                                <div class="card-header">
-                                    <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
-                                    <h5 class="card-title" th:text="${attraction.name}"></h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                                        <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
-                                        <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
-                                        <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
-                                        <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
-                                    </p>               
-                                </div>
+                    <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="card-link">
+                        <div class="card">
+                            <div class="card-header">
+                                <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                                <h5 class="card-title" th:text="${attraction.name}"></h5>
                             </div>
-                        </a>
-                    </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
+                                    <span th:text="${attraction.description}"></span><br>
+                                    <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
+                                    <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
+                                    <i class="fas fa-globe"></i><a th:href="${attraction.officialWebsite.startsWith('http') ? attraction.officialWebsite : 'http://' + attraction.officialWebsite}" target="_blank">  Visit Website</a>
+                                </p>               
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
