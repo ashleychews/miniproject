@@ -45,39 +45,45 @@
                 <h2>Our <span class="red">Recommendations</span></h2>
                 <div class="row">
                     <div class="col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="image-container">
-                                <img class="card-img-top" src="/images/jewel.jpg">
+                        <a th:href="@{/search/attractions(username=${username}, searchValues=${'jewel'})}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/jewel.jpg">
+                                </div>
+                                <div class="card-body">
+                                    <h1>Jewel Changi</h1>
+                                    <span>Discover a world of wonder at Jewel Changi - where nature meets retail</span>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h1>Jewel Changi</h1>
-                                <span>Discover a world of wonder at Jewel Changi - where nature meets retail</span>
-                            </div>
-                        </div>
+                        </a> 
                     </div>
 
                     <div class="col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="image-container">
-                                <img class="card-img-top" src="/images/Esplanade.jpg">
+                        <a th:href="@{/search/attractions(username=${username}, searchValues=${'esplanade'})}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/Esplanade.jpg">
+                                </div>
+                                <div class="card-body">
+                                    <h1>Esplanade</h1>
+                                    <span>The iconic heart of arts and culture in the city</span>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h1>Esplanade</h1>
-                                <span>The iconic heart of arts and culture in the city</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="image-container">
-                                <img class="card-img-top" src="/images/CHIJMES.jpg" style="height: 280px;">
+                        <a th:href="@{/search/attractions(username=${username}, searchValues=${'chijmes'})}">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img class="card-img-top" src="/images/CHIJMES.jpg" style="height: 280px;">
+                                </div>
+                                <div class="card-body">
+                                    <h1>CHIJMES</h1>
+                                    <span>Step into the charm of CHIJMES - a haven of history, beauty, and serenity</span>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h1>CHIJMES</h1>
-                                <span>Step into the charm of CHIJMES - a haven of history, beauty, and serenity</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -41,21 +41,23 @@
                 <div th:each="attraction : ${favourite}">
                 <!-- Display detailed information about each attraction -->
                     <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
-                                <h5 class="card-title" th:text="${attraction.name}"></h5>
+                        <a th:href="@{/search/attractions/{uuid}(uuid=${attraction.uuid})}" class="card-link">
+                            <div class="card">
+                                <div class="card-header">
+                                    <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                                    <h5 class="card-title" th:text="${attraction.name}"></h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
+                                        <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
+                                        <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
+                                        <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
+                                        <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
+                                    </p>               
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <strong>Type:</strong> <span th:text="${attraction.type}"></span><br>
-                                    <strong>Description:</strong> <span th:text="${attraction.description}"></span><br>
-                                    <span th:utext="${#strings.replace(#strings.replace(attraction.body, '<p>', ''), '<br>', '')}"></span>
-                                    <strong>Rating:</strong> <span th:text="${attraction.rating}"></span><br>
-                                    <strong>Official Website:</strong> <a th:href="${attraction.officialWebsite}" target="_blank">Visit Website</a>
-                                </p>               
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

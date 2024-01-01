@@ -84,7 +84,7 @@ h5 {
     font-size: 25px;
 }
 
-h5, .card {
+h5, .container {
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
 }

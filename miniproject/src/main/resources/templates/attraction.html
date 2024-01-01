@@ -39,7 +39,7 @@
                 <form method = "POST" th:action="@{/search/addtofavorites}">
                     <div class="card-header">
                         <div class="image-container">
-                            <img style="height: 500px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
+                            <img style="height: 500px; width: 700px;" th:if="${attraction.base64ImageData != null}" th:src="'data:image/jpeg;base64,' + ${attraction.base64ImageData}" alt="Attraction Image">
                             <img style="height: 300px;"th:unless="${attraction.base64ImageData != null}" th:src="${attraction.mediaURL}" alt="Attraction Image">
                         </div>
                         <div class="title-container">

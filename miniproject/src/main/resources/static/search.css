@@ -134,3 +134,8 @@ h2 {
     font-weight: bold;
     color: #ac00e6;
 }
+
+a {
+    color: black;
+    text-decoration: none;
+}
