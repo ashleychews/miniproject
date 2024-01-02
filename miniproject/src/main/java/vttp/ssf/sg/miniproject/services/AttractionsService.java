@@ -248,8 +248,8 @@ public class AttractionsService {
     }
 
     //save favourites
-    public void save(String username, List<Attractions> attractions) {
+    public void save(String username, List<Attractions> attractions, String password) {
         attRepo.deleteFavourite(username);
-        attRepo.addFavourite(username, attractions);
+        attRepo.addFavourite(username, attractions, password);
     }
 }

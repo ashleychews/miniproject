@@ -55,6 +55,7 @@ public class AttractionsController {
         if (attRepo.retrieveUser(username, password)) {
             // Password is correct, set the username in the session
             sess.setAttribute("username", username);
+            sess.setAttribute("password", password);
             model.addAttribute("user", user);
             return "redirect:/search";
         } else {
@@ -129,6 +130,7 @@ public class AttractionsController {
 
         // Retrieve the username from the session
         String username = (String) sess.getAttribute("username");
+
         mav.addObject("username", username);
     
         // Fetch details of a specific attraction by UUID
@@ -169,6 +171,8 @@ public class AttractionsController {
         //retrieve the uuid
         String uuid = (String) sess.getAttribute("uuid");
 
+        String password = (String) sess.getAttribute("password");
+
 
         if (bindings.hasErrors()) {
             return "error";
@@ -188,7 +192,7 @@ public class AttractionsController {
         model.addAttribute("username", user);
 
         // Save the updated favorites to the database
-        attSvc.save(user, favAttractions);
+        attSvc.save(user, favAttractions, password);
 
         return "redirect:/search/attractions/" + uuid;
     }
@@ -202,6 +206,7 @@ public class AttractionsController {
             
     // Retrieve the username from the session
     String user = (String) sess.getAttribute("username");
+    String password = (String) sess.getAttribute("password");
 
     // Get the list of favorited attractions
     List<Attractions> favAttractions = attSvc.getFavourite(username);
@@ -221,7 +226,7 @@ public class AttractionsController {
     model.addAttribute("username", user);
 
     // Save the updated favorites to the database
-    attSvc.save(user, favAttractions);
+    attSvc.save(user, favAttractions, password);
 
     // Redirect back to the favorite attractions page
     return "redirect:/search/favourite";

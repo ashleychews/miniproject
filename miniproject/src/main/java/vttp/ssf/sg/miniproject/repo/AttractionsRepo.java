@@ -17,6 +17,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AttractionsRepo {
@@ -63,7 +64,7 @@ public class AttractionsRepo {
         template.delete(username);
     }
 
-    public void addFavourite(String username, List<Attractions> attractions) {
+    public void addFavourite(String username, List<Attractions> attractions, String password) {
         List<Attractions> existingAttractions = getFavAtt(username);
 
         // Check for duplicates and add only new attractions
@@ -79,6 +80,7 @@ public class AttractionsRepo {
         String jsonString = convertListToJsonString(existingAttractions);
     
         // Update the Redis set
+        template.opsForHash().put(username, "password", password);
         template.opsForHash().put(username, "attractions", jsonString);
     
         // Log relevant information for testing
