@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="/successful.css">
+
     <title>Successful</title>
 </head>
     <body>
-        <div class="container">
-            <h2>You have Successfully signed up</h2>
-            <h2>Return to home to login</h2>
-            <a th:href="@{/index}"></a>
+        <div class="form-control">
+            <div class="successful-container">
+                <h2>SignUp Successful <i class="far fa-smile"></i></h2>
+                <h2>Return <a th:href="@{/}">Home</a> to Login</h2>
+            </div>
         </div>
     </body>
 </html>

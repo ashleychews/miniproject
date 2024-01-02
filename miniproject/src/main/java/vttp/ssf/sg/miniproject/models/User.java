@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 public class User {
 
     @NotEmpty(message="Please enter a username")
-    @Size(min=5, max=30, message = "Name must be minimum 2 characters and maximum 30 characters")
+    @Size(min=5, max=30, message = "Name must be minimum 5 characters and maximum 30 characters")
     private String username;
 
     @Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$", message=" Min 8 characters, at least 1 uppercase, 1 lowercase & 1 digit ")

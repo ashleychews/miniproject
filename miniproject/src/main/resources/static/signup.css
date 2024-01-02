@@ -68,5 +68,6 @@ h1 {
 }
 
 .alert.alert-danger {
+    font-family: 'Work Sans', sans-serif;
     color: red;
 }
