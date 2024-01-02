@@ -31,12 +31,13 @@
             </div>
         </nav>
 
+
         <div class="container">
             <!-- Display favorite attractions -->
             <h1>Your Favorites</h1>
 
             <div data-th-if="${#lists.isEmpty(favourite)}">
-                <h2>You have no Favourites</h2>
+                <h2>You have no Favourites <i class="fas fa-frown"></i></h2>
             </div>
 
             <div data-th-unless="${#lists.isEmpty(favourite)}">
@@ -57,6 +58,13 @@
                                     <i class="fas fa-globe"></i><a th:href="${attraction.officialWebsite.startsWith('http') ? attraction.officialWebsite : 'http://' + attraction.officialWebsite}" target="_blank">  Visit Website</a>
                                 </p>               
                             </div>
+
+                            <form method="POST" action="/search/deletefavorite">
+                                <input type="hidden" name="username" th:value="${username}" />
+                                <input type="hidden" name="uuid" th:value="${attraction.uuid}" />
+                                <button class="btn btn-delete" type="submit"><i class="fas fa-trash"></i>Delete</button>
+                            </form>
+
                         </div>
                     </a>
                 </div>

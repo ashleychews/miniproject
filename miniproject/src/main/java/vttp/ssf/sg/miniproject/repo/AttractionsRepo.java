@@ -2,6 +2,7 @@ package vttp.ssf.sg.miniproject.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import vttp.ssf.sg.miniproject.models.Attractions;
@@ -25,6 +26,27 @@ public class AttractionsRepo {
     @Qualifier("attRedis")
     private RedisTemplate<String, String> template;
 
+
+    public boolean hasUser(String username) {
+        return template.hasKey(username);
+    }
+
+    // Save user information to Redis
+    public void saveUser(String username, String password) {
+        HashOperations<String, String, String> hashOps = template.opsForHash();
+        hashOps.put(username, "password", password);
+    }
+
+    public boolean retrieveUser(String username, String password) {
+        HashOperations<String, String, String> hashOps = template.opsForHash();
+    
+        if (hasUser(username)) {
+            String userPassword = hashOps.get(username, "password");
+            return userPassword.equals(password);
+        }
+        return false;
+    }
+    
     public boolean hasFavourite(String username) {
         return template.opsForHash().hasKey(username, "attractions");
     }

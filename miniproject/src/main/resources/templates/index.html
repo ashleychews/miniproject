@@ -66,17 +66,21 @@
           
 
         <div class="form-control">
-          <form method="GET" action="/search">
+          <form method="POST" th:action="@{/login}" th:object="${user}">
               <div>
                   <div class="login-container">
                     <h1>Sign in</h1>
                     <p>Login to Start Searching</p>
                     <div class="form-container sign-in-container">
-                      <input type="text" class="login_input" name="username" placeholder="Username" required>
+                      <input type="text" name="username" th:field="*{username}" placeholder="Username" required>
+                      <div class = "alert alert-danger" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}"></div>
+                      <input type="password" name="password" th:field="*{password}" placeholder="Password" required>
+                      <div class = "alert alert-danger" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}"></div>
                     </div>
 
                     <div>
                       <button class="button-signin">Sign In</button>
+                      <p>Don't have an account?<a th:href="@{/signup}">Sign Up Now</a></p>
                     </div>
                   </div>
                       

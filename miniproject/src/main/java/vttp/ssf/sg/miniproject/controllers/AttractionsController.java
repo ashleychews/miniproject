@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vttp.ssf.sg.miniproject.models.Attractions;
+import vttp.ssf.sg.miniproject.models.User;
+import vttp.ssf.sg.miniproject.repo.AttractionsRepo;
 import vttp.ssf.sg.miniproject.services.AttractionsService;
 
 @Controller
@@ -26,21 +28,82 @@ public class AttractionsController {
     @Autowired
     private AttractionsService attSvc;
 
+    @Autowired
+    private AttractionsRepo attRepo;
+
+    //signin page
     @GetMapping
-    public String getLogin(@ModelAttribute("username") String username, Model model) {
+    public String getLogin(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
         return "index";
+    }
+
+    //validating signin page
+    @PostMapping("/login")
+    public String signIn(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession sess) {
+
+        String username = user.getUsername().toLowerCase();
+
+        if(result.hasErrors()){
+            return "index"; //stay on index page
+        }
+        // Retrieve the password from the user object
+        String password = user.getPassword();
+
+        // User exists, validate the password
+        if (attRepo.retrieveUser(username, password)) {
+            // Password is correct, set the username in the session
+            sess.setAttribute("username", username);
+            model.addAttribute("user", user);
+            return "redirect:/search";
+        } else {
+            // Password is incorrect, return to login page with an error message
+            result.rejectValue("password", "error.user", "Invalid password");
+            return "index";
+        }
+    }
+
+    //signup page
+    @GetMapping("/signup") 
+    public String signUp (Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "signup";
+    }
+
+    //post signup form
+    @PostMapping("/signupform") 
+    public String postsignUp (@ModelAttribute("user") @Valid User user, BindingResult result, Model model){
+
+        String username = user.getUsername().toLowerCase();
+        String password = user.getPassword();
+
+        if (result.hasErrors()) {
+            return "signup";
+        }
+
+        if (attRepo.hasUser(username)) {
+            result.rejectValue("username", "error.user", "Username already exists");
+            return "signup";
+        } else {
+            model.addAttribute("user", user);
+            attRepo.saveUser(username, password);
+            return "successful";
+        }
     }
 
     //search attractions
     //shows the list of attractions based on search
     @GetMapping("/search")
-    public String getSearch(@RequestParam String username, Model model, HttpSession sess) {
+    public String getSearch(Model model, HttpSession sess) {
         
-        //store user in session
-        sess.setAttribute("username", username);
+        //retrieve user from session
+        String username = (String) sess.getAttribute("username");
         model.addAttribute("username", username);
         return "search";
     }
+
 
     //populate the list of attractions on search form
     @GetMapping("/search/attractions")
@@ -128,5 +191,40 @@ public class AttractionsController {
         attSvc.save(user, favAttractions);
 
         return "redirect:/search/attractions/" + uuid;
+    }
+
+    //delete button to delete favourites
+    @PostMapping("/search/deletefavorite")
+    public String deleteFavorite(@RequestParam String username, @RequestParam String uuid,
+        HttpSession sess,
+        Model model) {
+
+            
+    // Retrieve the username from the session
+    String user = (String) sess.getAttribute("username");
+
+    // Get the list of favorited attractions
+    List<Attractions> favAttractions = attSvc.getFavourite(username);
+
+    // Remove the attraction with the specified UUID
+    for (int i = 0; i < favAttractions.size(); i++) {
+        if (favAttractions.get(i).getUuid().equals(uuid)) {
+            favAttractions.remove(i);
+        }
+    }
+
+    // Update the session with the modified list
+    sess.setAttribute("favourite", favAttractions);
+
+    // Add the list of favorite attractions and the username to the Model
+    model.addAttribute("favourite", favAttractions);
+    model.addAttribute("username", user);
+
+    // Save the updated favorites to the database
+    attSvc.save(user, favAttractions);
+
+    // Redirect back to the favorite attractions page
+    return "redirect:/search/favourite";
+
     }
 }

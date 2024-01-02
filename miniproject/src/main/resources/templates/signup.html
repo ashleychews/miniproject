@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="/signup.css">
+</head>
+<body>
+    <div class="form-control">
+        <form method="POST" th:action="@{/signupform}" th:object="${user}">
+            <div class="signup-container">
+                <h1>Sign Up</h1>
+                <div class="form-container">
+                    <div class="input-container">
+                        <input type="text" name="username" th:field="*{username}" placeholder="Username" required>
+                        <div class="alert alert-danger" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}"></div>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" name="password" th:field="*{password}" placeholder="Password" required>
+                        <div class="alert alert-danger" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}"></div>
+                    </div>
+                </div>
+                <div>
+                    <button class="button-signup">Sign Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>
