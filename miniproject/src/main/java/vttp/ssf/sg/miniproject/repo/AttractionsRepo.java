@@ -42,7 +42,7 @@ public class AttractionsRepo {
     
         if (hasUser(username)) {
             String userPassword = hashOps.get(username, "password");
-            return userPassword.equals(password);
+            return userPassword !=null && userPassword.equals(password);
         }
         return false;
     }
