@@ -111,7 +111,15 @@ h2 {
     color: red;
 }
 
-a {
-    color: black;
+a:hover, a:active {
+    color:inherit;
     text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+.card:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
 }

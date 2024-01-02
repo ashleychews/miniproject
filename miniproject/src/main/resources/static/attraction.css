@@ -65,6 +65,7 @@
 
 .container {
     margin-top: 30px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card-header {
@@ -73,7 +74,7 @@
 }
 
 .title-container {
-    margin-left: 15px;
+    margin-left: 50px;
 }
 
 h5 {
@@ -83,7 +84,7 @@ h5 {
     font-size: 25px;
 }
 
-h5, .container {
+h5 {
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
 }

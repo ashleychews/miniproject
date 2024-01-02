@@ -16,7 +16,6 @@
 
 .navbar-container{
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -47,6 +46,7 @@
 .menu-items{
     order: 2;
     display: flex;
+    margin-right: auto;
 }
 
 .navbar-logo {
